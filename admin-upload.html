@@ -1,0 +1,53 @@
+<!-- admin-upload.html -->
+<h2>Upload Dokumen</h2>
+<form id="uploadForm" enctype="multipart/form-data">
+    <label for="category">Kategori:</label>
+    <select name="category" id="category">
+        <option value="educational-background">Educational Background</option>
+        <option value="achievements">Achievements</option>
+        <option value="projects">Projects</option>
+        <option value="blog">Blog</option>
+    </select>
+
+    <br /><br />
+    <input type="file" name="file" id="fileInput" required />
+    <br /><br />
+    <button type="submit">Upload</button>
+</form>
+
+<div id="result"></div>
+
+<script>
+    document.getElementById('uploadForm').addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        const fileInput = document.getElementById('fileInput');
+        const category = document.getElementById('category').value;
+        const resultDiv = document.getElementById('result');
+
+        if (!fileInput.files.length) {
+            resultDiv.innerText = 'Harap pilih file terlebih dahulu!';
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('file', fileInput.files[0]);
+
+        try {
+            const response = await fetch(`http://localhost:3000/upload/${category}`, {
+                method: 'POST',
+                body: formData
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                resultDiv.innerText = result.message;
+            } else {
+                resultDiv.innerText = result.message || 'Upload gagal.';
+            }
+        } catch (error) {
+            resultDiv.innerText = 'Terjadi kesalahan: ' + error.message;
+        }
+    });
+</script>

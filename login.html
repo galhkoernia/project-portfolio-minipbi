@@ -1,0 +1,52 @@
+<!-- LOGIN HTML -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Login</title>
+    <style>
+        body {
+            font-family: Arial;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        form {
+            padding: 30px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <form onsubmit="return loginAdmin()">
+        <h2>Admin Login</h2>
+        <input type="password" id="password" placeholder="Enter Admin Password" required><br><br>
+        <button type="submit">Login</button>
+    </form>
+
+    <script>
+        function loginAdmin() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Ganti ini, sesuaikan
+            const validUsername = "galhkoernia";
+            const validPassword = "galhc0nect_id";
+
+            if (username === validUsername && password === validPassword) {
+                sessionStorage.setItem("admin", "true");
+                window.location.href = "admin-upload.html";
+            } else {
+                alert("Username atau password salah.");
+            }
+            return false;
+        }
+    </script>
+</body>
+
+</html>
